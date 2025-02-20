@@ -1,0 +1,894 @@
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 13222, функция: struct HPEN__ *__cdecl `anonymous-namespace'::TX::txSetColor(unsigned long,double,struct HDC__ *),
+
+Сообщение: Окно рисования не создано или не в порядке.
+Если вы указали параметр "dc", то он неверен.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF7BAA57048 (64-bit), Flags: Cmdre0, Thread: 0x35EC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF7BA9FB0FB in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF7BAA24876 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::txSetColor() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (13222)
+
+# 2 0x00007FF7BAA29D38 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (39):
+
+     37: 	
+     38: 	int B = b = TX_BLACK;
+=>   39: 	txSetColor(B);
+     40: 	txSetFillColor(B);
+     41: 	txRectangle(0, 0, 1080, 720);
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in struct HPEN__ *__cdecl `anonymous-namespace'::TX::txSetColor(unsigned long,double,struct HDC__ *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13222:
+
+  13220: HPEN txSetColor (COLORREF color, double thickness /*= 1*/, HDC dc /*= txDC()*/)
+  13221:     {
+=>13222: $1  if (_TX_DEFAULT_HDC_FAILED (dc)) return NULL;
+  13223: 
+  13224: $   HPEN pen = Win32::CreatePen ((color == TX_TRANSPARENT? PS_NULL : PS_SOLID), ROUND (thickness), color);
+
+# 1 in (null) at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp:39:
+
+     37: 	
+     38: 	int B = b = TX_BLACK;
+=>   39: 	txSetColor(B);
+     40: 	txSetFillColor(B);
+     41: 	txRectangle(0, 0, 1080, 720);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Jan 14 2025 19:18:08, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Jan 14 2025 19:18:11
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib сообщает:
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 13772, функция: bool __cdecl `anonymous-namespace'::TX::txTransparentBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned long),
+
+Сообщение: Прямоугольник копируемой области {0, 0, 160, 200} не полностью лежит внутри изображения-источника {0, 0, 14, 15}, функция txTransparentBlt() работать не будет.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF7D3FA40B8 (64-bit), Flags: CMdRe0, Thread: 0x2B7C (Main), GetLastError(): 13 (Недопустимые данные). 
+From: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13771 bool __cdecl `anonymous-namespace'::TX::txTransparentBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned long).
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF7D3F39C0B in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF7D3F6D699 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::txTransparentBlt() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (13771)
+
+# 2 0x00007FF7D3F567ED in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: PlayerAnim::draw() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (25):
+
+     23: 
+     24: 	void draw() {
+=>   25: 		txTransparentBlt(txDC(), x, y, 160, 200, image, 0, 0, TX_WHITE);
+     26: 	}
+     27: 
+
+# 3 0x00007FF7D3F6FC0C in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (89):
+
+     87: 	
+     88: 
+=>   89: 	anim.draw();
+     90: 
+     91: 	while (running) {
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool __cdecl `anonymous-namespace'::TX::txTransparentBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned long) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13771:
+
+  13769:         {
+  13770: $       SetLastError (ERROR_INVALID_DATA);
+=>13771: $       TX_ERROR ("Прямоугольник копируемой области {%g, %g, %g, %g} не полностью лежит внутри изображения-источника {%d, %d, %d, %d}, "
+  13772:                   "функция txTransparentBlt() работать не будет.", xSource, ySource, xSource + width, ySource + height, 0, 0, (int) size.x, (int) size.y);
+  13773:         }
+
+# 1 in (null) at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp:25:
+
+     23: 
+     24: 	void draw() {
+=>   25: 		txTransparentBlt(txDC(), x, y, 160, 200, image, 0, 0, TX_WHITE);
+     26: 	}
+     27: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Jan 21 2025 18:57:35, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Jan 21 2025 18:57:40
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 13722, функция: bool __cdecl `anonymous-namespace'::TX::txBitBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned int),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF7F9B39E98 (64-bit), Flags: CMdRe0, Thread: 0x3560 (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF7F9AD495B in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF7F9AF2A0B in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::txBitBlt() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (13722)
+
+# 2 0x00007FF7F9AA9555 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: Background::drawbg() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (23):
+
+     21: 	void drawbg()
+     22: 	{
+=>   23: 		txBitBlt(txDC(), 0, 0, 1080, 720, image);
+     24: 	}
+     25: 
+
+# 3 0x00007FF7F9B0081C in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (111):
+
+    109: 		txRectangle(0,0,1080,720);
+    110: 
+=>  111: 		bg.drawbg();
+    112: 
+    113: 		txEnd();
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool __cdecl `anonymous-namespace'::TX::txBitBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned int) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13722:
+
+  13720:     {
+  13721: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>13722: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  13723: 
+  13724: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in (null) at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp:23:
+
+     21: 	void drawbg()
+     22: 	{
+=>   23: 		txBitBlt(txDC(), 0, 0, 1080, 720, image);
+     24: 	}
+     25: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Jan 22 2025 20:06:59, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Jan 22 2025 20:07:03
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 10937, функция: bool __cdecl `anonymous-namespace'::TX::_txBuffer_Delete(struct HDC__ **),
+
+Сообщение: Параметр "*dc" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF69ADF5E98 (64-bit), Flags: CMdRE0, Thread: 0x2180 (Canvas), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF69AD895DB in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF69AD5FF70 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txBuffer_Delete() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10937)
+# 2 0x00007FF69AD65555 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_OnDESTROY() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10153)
+# 3 0x00007FF69AD6B06E in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10052)
+# 4 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+# 5 0x00007FFDA2C8E8CC in C:\Windows\System32\USER32.dll: DispatchMessageW()
+# 6 0x00007FFDA2CA10C3 in C:\Windows\System32\USER32.dll: SendMessageTimeoutW()
+# 7 0x00007FFDA4B31374 in C:\Windows\SYSTEM32\ntdll.dll: KiUserCallbackDispatcher()
+# 8 0x00007FFDA2121124 in C:\Windows\System32\win32u.dll: NtUserMessageCall()
+# 9 0x00007FFDA2C8CBD5 in C:\Windows\System32\USER32.dll: GetWindowTextW()
+#10 0x00007FFDA2C8995D in C:\Windows\System32\USER32.dll: PeekMessageA()
+#11 0x00007FFDA2C895A7 in C:\Windows\System32\USER32.dll: GetWindowTextA()
+#12 0x00007FF69AD6BA80 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10091)
+#13 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+#14 0x00007FFDA2C8E8CC in C:\Windows\System32\USER32.dll: DispatchMessageW()
+#15 0x00007FFDA2CA10C3 in C:\Windows\System32\USER32.dll: SendMessageTimeoutW()
+#16 0x00007FFDA4B31374 in C:\Windows\SYSTEM32\ntdll.dll: KiUserCallbackDispatcher()
+#17 0x00007FFDA2121124 in C:\Windows\System32\win32u.dll: NtUserMessageCall()
+#18 0x00007FFDA2C8CBD5 in C:\Windows\System32\USER32.dll: GetWindowTextW()
+#19 0x00007FFDA2C8995D in C:\Windows\System32\USER32.dll: PeekMessageA()
+#20 0x00007FFD9FA9DFA2 in C:\Windows\system32\uxtheme.dll: GetUserColorPreference()
+#21 0x00007FFD9FA97092 in C:\Windows\system32\uxtheme.dll: Ordinal96()
+#22 0x00007FFD9FAA0099 in C:\Windows\system32\uxtheme.dll: IsCompositionActive()
+#23 0x00007FFD9FA96B6E in C:\Windows\system32\uxtheme.dll: GetThemePosition()
+#24 0x00007FFDA2C895B6 in C:\Windows\System32\USER32.dll: GetWindowTextA()
+#25 0x00007FF69AD6BA80 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10091)
+#26 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+#27 0x00007FFDA2C8E8CC in C:\Windows\System32\USER32.dll: DispatchMessageW()
+#28 0x00007FFDA2CA10C3 in C:\Windows\System32\USER32.dll: SendMessageTimeoutW()
+#29 0x00007FFDA4B31374 in C:\Windows\SYSTEM32\ntdll.dll: KiUserCallbackDispatcher()
+#30 0x00007FFDA2121124 in C:\Windows\System32\win32u.dll: NtUserMessageCall()
+#31 0x00007FFDA2C8CBD5 in C:\Windows\System32\USER32.dll: GetWindowTextW()
+#32 0x00007FFDA2C8995D in C:\Windows\System32\USER32.dll: PeekMessageA()
+#33 0x00007FFD9FA9DFA2 in C:\Windows\system32\uxtheme.dll: GetUserColorPreference()
+#34 0x00007FFD9FA96FE7 in C:\Windows\system32\uxtheme.dll: Ordinal96()
+#35 0x00007FFD9FAA0099 in C:\Windows\system32\uxtheme.dll: IsCompositionActive()
+#36 0x00007FFD9FA96B6E in C:\Windows\system32\uxtheme.dll: GetThemePosition()
+#37 0x00007FFDA2C895B6 in C:\Windows\System32\USER32.dll: GetWindowTextA()
+#38 0x00007FF69AD6BA80 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10091)
+#39 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+#40 0x00007FFDA2C8E684 in C:\Windows\System32\USER32.dll: DispatchMessageW()
+#41 0x00007FF69AD69E79 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_ThreadProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (9835)
+#42 0x00007FFDA335AF5A in C:\Windows\System32\msvcrt.dll: beginthreadex()
+#43 0x00007FFDA335B02C in C:\Windows\System32\msvcrt.dll: endthreadex()
+#44 0x00007FFDA3827374 in C:\Windows\System32\KERNEL32.dll: BaseThreadInitThunk()
+#45 0x00007FFDA4ADCC91 in C:\Windows\SYSTEM32\ntdll.dll: RtlUserThreadStart()
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool __cdecl `anonymous-namespace'::TX::_txBuffer_Delete(struct HDC__ **) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10937:
+
+  10935: $1  if (_TX_ARGUMENT_FAILED (dc)) return false;
+  10936: $   if (                   !*dc)  return false;
+=>10937: $   if (_TX_HDC_FAILED     (*dc)) return false;
+  10938: 
+  10939: $   if (!Win32::GetObjectType (Win32::GetCurrentObject (*dc, OBJ_BITMAP))) return false;
+
+# 1 in bool __cdecl `anonymous-namespace'::TX::_txCanvas_OnDESTROY(struct HWND__ *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10153:
+
+  10151: 
+  10152: $   if (_txCanvas_BackBuf[1]) _txBuffer_Delete (&_txCanvas_BackBuf[1])  asserted;
+=>10153: $   if (_txCanvas_BackBuf[0]) _txBuffer_Delete (&_txCanvas_BackBuf[0])  asserted;
+  10154: $   _txCanvas_Pixels = NULL;
+  10155: 
+
+# 2 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10052:
+
+  10050: 
+  10051:         case WM_CLOSE:          {$ if (_txCanvas_OnCLOSE      (wnd))  break;       else return 0; }
+=>10052:         case WM_DESTROY:        {$     _txCanvas_OnDESTROY    (wnd);                    return 0; }
+  10053: 
+  10054:         case WM_ERASEBKGND:     {$ if (!bkErased) { bkErased = true;  break; }     else return 1; }
+
+# 3 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10091:
+
+  10089:         }
+  10090: 
+=>10091: $   return DefWindowProc (wnd, msg, wpar, lpar);
+  10092:     }
+  10093: 
+
+# 4 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10091:
+
+  10089:         }
+  10090: 
+=>10091: $   return DefWindowProc (wnd, msg, wpar, lpar);
+  10092:     }
+  10093: 
+
+# 5 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10091:
+
+  10089:         }
+  10090: 
+=>10091: $   return DefWindowProc (wnd, msg, wpar, lpar);
+  10092:     }
+  10093: 
+
+# 6 in unsigned int __cdecl `anonymous-namespace'::TX::_txCanvas_ThreadProc(void *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:9835:
+
+   9833: 
+   9834: $       TranslateMessage (&msg);
+=> 9835: $       DispatchMessage  (&msg);
+   9836: 
+   9837: $       Sleep (0);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Jan 22 2025 19:45:09, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Jan 22 2025 19:45:13
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 10150, функция: bool __cdecl `anonymous-namespace'::TX::_txCanvas_OnDESTROY(struct HWND__ *),
+
+Сообщение: Обнаружен нулевой или ложный результат.
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF69ADF5E98 (64-bit), Flags: CMdrE0, Thread: 0x2180 (Canvas). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF69AD895DB in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF69AD653D3 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_OnDESTROY() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10150)
+# 2 0x00007FF69AD6B06E in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10052)
+# 3 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+# 4 0x00007FFDA2C8E8CC in C:\Windows\System32\USER32.dll: DispatchMessageW()
+# 5 0x00007FFDA2CA10C3 in C:\Windows\System32\USER32.dll: SendMessageTimeoutW()
+# 6 0x00007FFDA4B31374 in C:\Windows\SYSTEM32\ntdll.dll: KiUserCallbackDispatcher()
+# 7 0x00007FFDA2121124 in C:\Windows\System32\win32u.dll: NtUserMessageCall()
+# 8 0x00007FFDA2CC9EE3 in C:\Windows\System32\USER32.dll: SetWindowsHookExAW()
+# 9 0x00007FF69AD708D4 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCleanup() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (9111)
+#10 0x00007FF69AD99F02 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txProcessError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (12703)
+#11 0x00007FF69AD895DB in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+#12 0x00007FF69AD5FF70 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txBuffer_Delete() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10937)
+#13 0x00007FF69AD65555 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_OnDESTROY() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10153)
+#14 0x00007FF69AD6B06E in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10052)
+#15 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+#16 0x00007FFDA2C8E8CC in C:\Windows\System32\USER32.dll: DispatchMessageW()
+#17 0x00007FFDA2CA10C3 in C:\Windows\System32\USER32.dll: SendMessageTimeoutW()
+#18 0x00007FFDA4B31374 in C:\Windows\SYSTEM32\ntdll.dll: KiUserCallbackDispatcher()
+#19 0x00007FFDA2121124 in C:\Windows\System32\win32u.dll: NtUserMessageCall()
+#20 0x00007FFDA2C8CBD5 in C:\Windows\System32\USER32.dll: GetWindowTextW()
+#21 0x00007FFDA2C8995D in C:\Windows\System32\USER32.dll: PeekMessageA()
+#22 0x00007FFDA2C895A7 in C:\Windows\System32\USER32.dll: GetWindowTextA()
+#23 0x00007FF69AD6BA80 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10091)
+#24 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+#25 0x00007FFDA2C8E8CC in C:\Windows\System32\USER32.dll: DispatchMessageW()
+#26 0x00007FFDA2CA10C3 in C:\Windows\System32\USER32.dll: SendMessageTimeoutW()
+#27 0x00007FFDA4B31374 in C:\Windows\SYSTEM32\ntdll.dll: KiUserCallbackDispatcher()
+#28 0x00007FFDA2121124 in C:\Windows\System32\win32u.dll: NtUserMessageCall()
+#29 0x00007FFDA2C8CBD5 in C:\Windows\System32\USER32.dll: GetWindowTextW()
+#30 0x00007FFDA2C8995D in C:\Windows\System32\USER32.dll: PeekMessageA()
+#31 0x00007FFD9FA9DFA2 in C:\Windows\system32\uxtheme.dll: GetUserColorPreference()
+#32 0x00007FFD9FA97092 in C:\Windows\system32\uxtheme.dll: Ordinal96()
+#33 0x00007FFD9FAA0099 in C:\Windows\system32\uxtheme.dll: IsCompositionActive()
+#34 0x00007FFD9FA96B6E in C:\Windows\system32\uxtheme.dll: GetThemePosition()
+#35 0x00007FFDA2C895B6 in C:\Windows\System32\USER32.dll: GetWindowTextA()
+#36 0x00007FF69AD6BA80 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10091)
+#37 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+#38 0x00007FFDA2C8E8CC in C:\Windows\System32\USER32.dll: DispatchMessageW()
+#39 0x00007FFDA2CA10C3 in C:\Windows\System32\USER32.dll: SendMessageTimeoutW()
+#40 0x00007FFDA4B31374 in C:\Windows\SYSTEM32\ntdll.dll: KiUserCallbackDispatcher()
+#41 0x00007FFDA2121124 in C:\Windows\System32\win32u.dll: NtUserMessageCall()
+#42 0x00007FFDA2C8CBD5 in C:\Windows\System32\USER32.dll: GetWindowTextW()
+#43 0x00007FFDA2C8995D in C:\Windows\System32\USER32.dll: PeekMessageA()
+#44 0x00007FFD9FA9DFA2 in C:\Windows\system32\uxtheme.dll: GetUserColorPreference()
+#45 0x00007FFD9FA96FE7 in C:\Windows\system32\uxtheme.dll: Ordinal96()
+#46 0x00007FFD9FAA0099 in C:\Windows\system32\uxtheme.dll: IsCompositionActive()
+#47 0x00007FFD9FA96B6E in C:\Windows\system32\uxtheme.dll: GetThemePosition()
+#48 0x00007FFDA2C895B6 in C:\Windows\System32\USER32.dll: GetWindowTextA()
+#49 0x00007FF69AD6BA80 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_WndProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10091)
+#50 0x00007FFDA2C8EF5C in C:\Windows\System32\USER32.dll: CallWindowProcW()
+#51 0x00007FFDA2C8E684 in C:\Windows\System32\USER32.dll: DispatchMessageW()
+#52 0x00007FF69AD69E79 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txCanvas_ThreadProc() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (9835)
+#53 0x00007FFDA335AF5A in C:\Windows\System32\msvcrt.dll: beginthreadex()
+#54 0x00007FFDA335B02C in C:\Windows\System32\msvcrt.dll: endthreadex()
+#55 0x00007FFDA3827374 in C:\Windows\System32\KERNEL32.dll: BaseThreadInitThunk()
+#56 0x00007FFDA4ADCC91 in C:\Windows\SYSTEM32\ntdll.dll: RtlUserThreadStart()
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool __cdecl `anonymous-namespace'::TX::_txCanvas_OnDESTROY(struct HWND__ *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10150:
+
+  10148:     // Освобождаем ресурсы, связанные с окном
+  10149: 
+=>10150: $   if (_txCanvas_RefreshTimer) KillTimer (wnd, _txCanvas_RefreshTimer) asserted;
+  10151: 
+  10152: $   if (_txCanvas_BackBuf[1]) _txBuffer_Delete (&_txCanvas_BackBuf[1])  asserted;
+
+# 1 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10052:
+
+  10050: 
+  10051:         case WM_CLOSE:          {$ if (_txCanvas_OnCLOSE      (wnd))  break;       else return 0; }
+=>10052:         case WM_DESTROY:        {$     _txCanvas_OnDESTROY    (wnd);                    return 0; }
+  10053: 
+  10054:         case WM_ERASEBKGND:     {$ if (!bkErased) { bkErased = true;  break; }     else return 1; }
+
+# 2 in void __cdecl `anonymous-namespace'::TX::_txCleanup(void) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:9111:
+
+   9109: 
+   9110: $   if (txWindow())
+=> 9111:         {$ SendNotifyMessage (txWindow(), WM_DESTROY, 0, 0); }
+   9112: 
+   9113: $   _txWaitFor (!txWindow(), 5*_TX_TIMEOUT);
+
+# 3 in const char *__cdecl `anonymous-namespace'::TX::_txProcessError(const char [],int,const char [],unsigned int,const char [],char *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:12634:
+
+  12632: 
+  12633:     if (stkTrace && strstr (stkTrace, ".exe: "))
+=>12634:         {$ fprintf (stderr,    "Стек вызовов:\n\n"
+  12635:                                "%s\n\n"
+  12636:                                "--------------------------------------------------\n",
+
+# 4 in bool __cdecl `anonymous-namespace'::TX::_txCanvas_OnDESTROY(struct HWND__ *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10153:
+
+  10151: 
+  10152: $   if (_txCanvas_BackBuf[1]) _txBuffer_Delete (&_txCanvas_BackBuf[1])  asserted;
+=>10153: $   if (_txCanvas_BackBuf[0]) _txBuffer_Delete (&_txCanvas_BackBuf[0])  asserted;
+  10154: $   _txCanvas_Pixels = NULL;
+  10155: 
+
+# 5 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10052:
+
+  10050: 
+  10051:         case WM_CLOSE:          {$ if (_txCanvas_OnCLOSE      (wnd))  break;       else return 0; }
+=>10052:         case WM_DESTROY:        {$     _txCanvas_OnDESTROY    (wnd);                    return 0; }
+  10053: 
+  10054:         case WM_ERASEBKGND:     {$ if (!bkErased) { bkErased = true;  break; }     else return 1; }
+
+# 6 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10091:
+
+  10089:         }
+  10090: 
+=>10091: $   return DefWindowProc (wnd, msg, wpar, lpar);
+  10092:     }
+  10093: 
+
+# 7 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10091:
+
+  10089:         }
+  10090: 
+=>10091: $   return DefWindowProc (wnd, msg, wpar, lpar);
+  10092:     }
+  10093: 
+
+# 8 in __int64 __cdecl `anonymous-namespace'::TX::_txCanvas_WndProc(struct HWND__ *,unsigned int,unsigned __int64,__int64) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:10091:
+
+  10089:         }
+  10090: 
+=>10091: $   return DefWindowProc (wnd, msg, wpar, lpar);
+  10092:     }
+  10093: 
+
+# 9 in unsigned int __cdecl `anonymous-namespace'::TX::_txCanvas_ThreadProc(void *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:9835:
+
+   9833: 
+   9834: $       TranslateMessage (&msg);
+=> 9835: $       DispatchMessage  (&msg);
+   9836: 
+   9837: $       Sleep (0);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Jan 22 2025 19:45:09, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Jan 22 2025 19:45:13
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 13722, функция: bool __cdecl `anonymous-namespace'::TX::txBitBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned int),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF6E23E80E8 (64-bit), Flags: CMdRe0, Thread: 0x704 (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF6E23738DB in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF6E239801B in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::txBitBlt() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (13722)
+
+# 2 0x00007FF6E2390496 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: GameBackground::draw() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (303):
+
+    301: 		if (location == 1) {
+    302: 
+=>  303: 			txBitBlt(txDC(), 0, 0, 1080, 720, cars);
+    304: 
+    305: 		}
+
+# 3 0x00007FF6E23B196D in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (719):
+
+    717: 			
+    718: 			txBegin();
+=>  719: 			gamebg.draw(location);
+    720: 			if (move == false) {
+    721: 				anim.Idle(x, y, left, right);
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool __cdecl `anonymous-namespace'::TX::txBitBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned int) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13722:
+
+  13720:     {
+  13721: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>13722: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  13723: 
+  13724: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in (null) at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp:303:
+
+    301: 		if (location == 1) {
+    302: 
+=>  303: 			txBitBlt(txDC(), 0, 0, 1080, 720, cars);
+    304: 
+    305: 		}
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Jan 28 2025 18:19:26, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Jan 28 2025 18:19:32
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 13722, функция: bool __cdecl `anonymous-namespace'::TX::txBitBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned int),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF7FFA40E98 (64-bit), Flags: CMdRe0, Thread: 0x48D0 (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF7FF9CF61B in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF7FF9F289B in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::txBitBlt() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (13722)
+
+# 2 0x00007FF7FF9EBFE6 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: GameBackground::draw() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (303):
+
+    301: 		if (location == 1) {
+    302: 
+=>  303: 			txBitBlt(txDC(), 0, 0, 1080, 720, cars);
+    304: 
+    305: 		}
+
+# 3 0x00007FF7FFA0BA00 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (719):
+
+    717: 			
+    718: 			txBegin();
+=>  719: 			gamebg.draw(location);
+    720: 			if (move == false) {
+    721: 				anim.Idle(x, y, left, right);
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool __cdecl `anonymous-namespace'::TX::txBitBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned int) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13722:
+
+  13720:     {
+  13721: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>13722: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  13723: 
+  13724: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in (null) at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp:303:
+
+    301: 		if (location == 1) {
+    302: 
+=>  303: 			txBitBlt(txDC(), 0, 0, 1080, 720, cars);
+    304: 
+    305: 		}
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Jan 28 2025 18:23:08, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Jan 28 2025 18:23:12
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 13722, функция: bool __cdecl `anonymous-namespace'::TX::txBitBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned int),
+
+Сообщение: Параметр "sourceImage" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF6243B0E98 (64-bit), Flags: CMdRe0, Thread: 0xF0C (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF62433F61B in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF62436289B in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::txBitBlt() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (13722)
+
+# 2 0x00007FF62435BFE6 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: GameBackground::draw() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (305):
+
+    303: 		if (location == 1) {
+    304: 
+=>  305: 			txBitBlt(txDC(), 0, 0, 1080, 720, cars);
+    306: 
+    307: 		}
+
+# 3 0x00007FF62437BA05 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (721):
+
+    719: 			
+    720: 			txBegin();
+=>  721: 			gamebg.draw(location);
+    722: 			if (move == false) {
+    723: 				anim.Idle(x, y, left, right);
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool __cdecl `anonymous-namespace'::TX::txBitBlt(struct HDC__ *,double,double,double,double,struct HDC__ *,double,double,unsigned int) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13722:
+
+  13720:     {
+  13721: $1  if (_TX_HDC_FAILED (destImage))   return false;
+=>13722: $   if (_TX_HDC_FAILED (sourceImage)) return false;
+  13723: 
+  13724: $   POINT size = txGetExtent (sourceImage);
+
+# 1 in (null) at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp:305:
+
+    303: 		if (location == 1) {
+    304: 
+=>  305: 			txBitBlt(txDC(), 0, 0, 1080, 720, cars);
+    306: 
+    307: 		}
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Jan 28 2025 18:25:34, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Jan 28 2025 18:25:38
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe,
+
+ВНЕЗАПНО: Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x00007FF646897BC0 в функции GameBackground::drawBackgroundLayers() в файле C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp на строке 114 в модуле C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF6468E7E98 (64-bit), Flags: CMdRe0, Thread: 0x4CB0 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF646897BC0 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: GameBackground::drawBackgroundLayers() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (114):
+
+    112: 	}
+    113: 	void drawBackgroundLayers() {
+=>  114: 		Win32::TransparentBlt(txDC(), x_houses_trees, 0, 1080, 720, houses_trees, 0, 0, 1080, 720, TX_WHITE);
+    115: 		Win32::TransparentBlt(txDC(), x_houses, 0, 1080, 720, houses, 0, 0, 1080, 720, TX_WHITE);
+    116: 		Win32::TransparentBlt(txDC(), x_cars, 0, 1080, 720, cars, 0, 0, 1080, 720, TX_WHITE);
+
+# 1 0x00007FF6468977A7 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: GameBackground::draw() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (108):
+
+    106: 
+    107: 			// Отрисовка объектов
+=>  108: 			drawBackgroundLayers();
+    109: 
+    110: 			txEnd(); // Завершаем рисование
+
+# 2 0x00007FF6468B2B69 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (273):
+
+    271: 		// Если в игре, отрисовываем игру
+    272: 		if (game) {
+=>  273: 			gamebg.draw(location);
+    274: 
+    275: 			if (GetAsyncKeyState(VK_ESCAPE) && !pause) {
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in (null) at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp:114:
+
+    112: 	}
+    113: 	void drawBackgroundLayers() {
+=>  114: 		Win32::TransparentBlt(txDC(), x_houses_trees, 0, 1080, 720, houses_trees, 0, 0, 1080, 720, TX_WHITE);
+    115: 		Win32::TransparentBlt(txDC(), x_houses, 0, 1080, 720, houses, 0, 0, 1080, 720, TX_WHITE);
+    116: 		Win32::TransparentBlt(txDC(), x_cars, 0, 1080, 720, cars, 0, 0, 1080, 720, TX_WHITE);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Feb  4 2025 23:47:32, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Feb  4 2025 23:47:36
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe,
+
+ВНЕЗАПНО: signal (8, 0x81): SIGFPE: Грубая ошибка в вычислениях. _FPE_INVALID: Результат неверен. 
+
+Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x00007FF646897BC0 в функции GameBackground::drawBackgroundLayers() в файле C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp на строке 114 в модуле C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF6468E7E98 (64-bit), Flags: CMdRe0, Thread: 0x4CB0 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF646897BC0 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: GameBackground::drawBackgroundLayers() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (114):
+
+    112: 	}
+    113: 	void drawBackgroundLayers() {
+=>  114: 		Win32::TransparentBlt(txDC(), x_houses_trees, 0, 1080, 720, houses_trees, 0, 0, 1080, 720, TX_WHITE);
+    115: 		Win32::TransparentBlt(txDC(), x_houses, 0, 1080, 720, houses, 0, 0, 1080, 720, TX_WHITE);
+    116: 		Win32::TransparentBlt(txDC(), x_cars, 0, 1080, 720, cars, 0, 0, 1080, 720, TX_WHITE);
+
+# 1 0x00007FF6468977A7 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: GameBackground::draw() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (108):
+
+    106: 
+    107: 			// Отрисовка объектов
+=>  108: 			drawBackgroundLayers();
+    109: 
+    110: 			txEnd(); // Завершаем рисование
+
+# 2 0x00007FF6468B2B69 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (273):
+
+    271: 		// Если в игре, отрисовываем игру
+    272: 		if (game) {
+=>  273: 			gamebg.draw(location);
+    274: 
+    275: 			if (GetAsyncKeyState(VK_ESCAPE) && !pause) {
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Feb  4 2025 23:47:32, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Feb  4 2025 23:47:35
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe, файл: C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h, строка: 13187, функция: struct tagPOINT __cdecl `anonymous-namespace'::TX::txGetExtent(struct HDC__ *),
+
+Сообщение: Обнаружен нулевой или ложный результат.
+
+#1: TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400], Instance: 0x00007FF739B68E98 (64-bit), Flags: CMdrE0, Thread: 0x1E44 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FF739AF9FCB in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::_txError() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (10992)
+# 1 0x00007FF739B20195 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::txGetExtent() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (13187)
+# 2 0x00007FF739B1B24E in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: `anonymous namespace'::TX::txClear() at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h (13315)
+
+# 3 0x00007FF739B33033 in C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe: main() at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp (320):
+
+    318: 	while (running) {
+    319: 		// Очищаем экран перед отрисовкой
+=>  320: 		txClear();
+    321: 		txBegin();
+    322: 		
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in struct tagPOINT __cdecl `anonymous-namespace'::TX::txGetExtent(struct HDC__ *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13187:
+
+  13185: 
+  13186: $   BITMAP bmap = {};
+=>13187: $   txGDI (Win32::GetObject (Win32::GetCurrentObject (dc, OBJ_BITMAP), sizeof (bmap), &bmap), dc) asserted;
+  13188: 
+  13189: $   POINT  size = { bmap.bmWidth, bmap.bmHeight };
+
+# 1 in bool __cdecl `anonymous-namespace'::TX::txClear(struct HDC__ *) at C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h:13315:
+
+  13313: $1  if (_TX_DEFAULT_HDC_FAILED (dc)) return false;
+  13314: 
+=>13315: $   POINT size = txGetExtent (dc);
+  13316: $   return txGDI (!!(Win32::PatBlt (dc, 0, 0, size.x, size.y, PATCOPY)), dc);
+  13317:     }
+
+# 2 in (null) at C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp:320:
+
+    318: 	while (running) {
+    319: 		// Очищаем экран перед отрисовкой
+=>  320: 		txClear();
+    321: 		txBegin();
+    322: 		
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 173, Date: 2024-06-23 22:37:05 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Program Files\Microsoft Visual Studio\2022\Community\TX\TXLib.h
+Compiled:	Feb 11 2025 22:41:06, MSVS 1939, std=199711L, MSVC Runtime, 64-bit, DEBUG
+Started:	Feb 11 2025 22:41:09
+
+Run file:	C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+Directory:	C:\Users\User\Desktop\E\LastDayOnEarthC++
+
+--------------------------------------------------
