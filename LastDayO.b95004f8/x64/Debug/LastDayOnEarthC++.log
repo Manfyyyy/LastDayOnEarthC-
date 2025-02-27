@@ -1,3 +1,3 @@
 ﻿  Main.cpp
-C:\Users\User\Desktop\E\LastDayOnEarthC++\Main.cpp(362,23): warning C4244: =: преобразование "double" в "int", возможна потеря данных
-  LastDayOnEarthC++.vcxproj -> C:\Users\User\Desktop\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe
+D:\E\LastDayOnEarthC++\Main.cpp(366,23): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+  LastDayOnEarthC++.vcxproj -> D:\E\LastDayOnEarthC++\x64\Debug\LastDayOnEarthC++.exe

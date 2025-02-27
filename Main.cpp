@@ -21,16 +21,13 @@ struct Inventar {
 	HDC med = txLoadImage("textures/items/heal_texture.bmp");
 	HDC water = txLoadImage("textures/items/water_texture.bmp");
 	int kolvo_predmetov;
-	int random_predmet;
-
-	void random_loot() {
-		random_predmet = rand() % (2 - 1 + 1) + 1;
-		if (random_predmet == 1)(cout << random_predmet);
-		else (cout << random_predmet);
-		
-	}
-
+	int random_predmet = 0;
+	std::initializer_list<string> predmets_in_inv;
+	
 	void open_car() {
+		
+		if (random_predmet == 0)(random_predmet = rand() % (2 - 1 + 1) + 1);
+		
 		txSetFillColor(TX_BLACK);
 		txSetColor(TX_BLACK);
 
@@ -48,7 +45,8 @@ struct Inventar {
 
 		txSetFillColor(TX_WHITE);
 		txSetColor(TX_WHITE);
-		Win32::TransparentBlt(txDC(), 500, 0, 200, 200, water, 0, 0, 200, 200, TX_WHITE);
+		if (random_predmet == 1)(Win32::TransparentBlt(txDC(), 500, 0, 200, 200, water, 0, 0, 200, 200, TX_WHITE));
+		else(Win32::TransparentBlt(txDC(), 495, 0, 400, 300, med, 0, 0, 200, 113, TX_WHITE));
 	}
 
 	void open_inventar() {
@@ -80,11 +78,6 @@ struct Inventar {
 		txEnd();
 	}
 };
-
-
-
-
-
 ///Анимация бездействия///
 struct PlayerAnimation {
 	int x,y,cadr = 0;
@@ -117,8 +110,6 @@ struct PlayerAnimation {
 };
 //////////////////////////
 
-
-
 ///Кнопки///
 struct Button {
 	int x;
@@ -140,6 +131,30 @@ struct Button {
 		return(txMouseX() > x && txMouseX() < x + width &&
 			txMouseY() > y && txMouseY() < y + heigh &&
 			txMouseButtons() == 1);
+	}
+	void cnhage_lan(string& language, string& language_text, string& start_text, string& about_me_text, string& settings_text, string& exit_text, string& back_text){
+		
+		
+		if (language == "Русский"){
+			language = "English";
+			language_text = "Language: ";
+			start_text = "Start";
+			about_me_text = "About me";
+			settings_text = "Settings";
+			exit_text = "Exit";
+			back_text = "Back";
+		}
+		
+		else if (language == "English")
+		{
+			language = "Русский";
+			language_text = "Язык: ";
+			start_text = "Начать игру";
+			about_me_text = "Об авторе";
+			settings_text = "Настройки";
+			exit_text = "Выход";
+			back_text = "Вернуться";
+		}
 	}
 };
 ////////////
@@ -220,8 +235,6 @@ struct GameBackground {
 	}
 };
 
-
-
 ///Задний фон///
 struct Background {
 	HDC image;
@@ -267,12 +280,8 @@ struct Player {
 		}
 	}
 
-
 };
 ///////////////////////////
-
-
-
 int main() {
 	txCreateWindow(1080, 720);
 	txTextCursor(false);
@@ -304,13 +313,24 @@ int main() {
 	int y1 = 200;
 	bool open_inv = false;
 	bool open_car = false;
+	bool prev_state = false;
+	std::string language = "Русский";
+	std::string language_text = "Язык: ";
+	std::string start_text = "Начать игру";
+	std::string about_me_text = "Об авторе";
+	std::string settings_text = "Настройки";
+	std::string exit_text = "Выход";
+	std::string back_text = "Вернуться";
+
+
 	Player blt;
-	Background bg = { txLoadImage("textures/bg/mainbg.bmp") };
-	Button start = { 0,300,150,40, W , B, "Начать игру" };
-	Button about = { 0, 400, 120, 40, W, B , "Об авторе" };
-	Button settings = { 0, 350, 150, 40, W, B , "Настройки" };
-	Button exit = { 0, 450, 120, 40, W, B , "Выход" };
-	Button back = { 0 , 680 ,150 , 40 , W, B, "Вернуться" };
+	Background bg = { txLoadImage("textures/bg/mainbg.bmp")};
+	Button start = { 0,300,150,40, W , B, start_text.c_str()};
+	
+	Button about = { 0, 400, 120, 40, W, B , about_me_text.c_str()};
+	Button settings = { 0, 350, 150, 40, W, B , settings_text.c_str()};
+	Button exit = { 0, 450, 120, 40, W, B , exit_text.c_str()};
+	Button back = { 0 , 680 ,150 , 40 , W, B, back_text.c_str()};
 	PlayerAnimation anim;
 	GameBackground gamebg = { txLoadImage("textures/bg/city/car_trees.bmp"), txLoadImage("textures/bg/city/road.bmp"), txLoadImage("textures/bg/city/houses&trees_bg.bmp") };
 	Inventar invent;
@@ -319,8 +339,6 @@ int main() {
 		// Очищаем экран перед отрисовкой
 		txClear();
 		txBegin();
-		
-
 		// Если в меню, то отображаем фон и кнопки
 		if (menu) {
 			bg.drawbg();
@@ -329,20 +347,20 @@ int main() {
 			settings.draw_b();
 			exit.draw_b();
 		}
-
-
 		if (open_inv && GetAsyncKeyState(0x45) == false) {
 			invent.open_inventar();
 			if (open_car) (invent.open_car());
 			
 		}
-		
-		if (GetAsyncKeyState(0x45) && open_inv == true) {
-			txSleep(50);
+		if (GetAsyncKeyState(0x45) && open_inv == true && !prev_state) {
+			txSleep(100);
 			open_inv = false;
 			cout << open_inv;
 		}
-
+		if (!(GetAsyncKeyState(0x45) & 0x8000) && open_inv) {
+			txSleep(50);
+			prev_state = false;
+		}
 		// Если в игре, отрисовываем игру
 		if (game) {
 			mouse_x, mouse_y = txMouseX(), txMouseY();
@@ -353,14 +371,15 @@ int main() {
 				if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= x3 and txMouseX() <= x3 + 380 and x < x3 + 420 and x + 64 > x3 - 40) {
 					open_inv = true;
 					open_car = true;
-					invent.random_loot();
 				}
-				
-				if (GetAsyncKeyState(0x45) && open_inv == false) {
+				if (GetAsyncKeyState(0x45) && open_inv == false && !prev_state) {
+					prev_state = true;
+					txSleep(100);
 					open_inv = true;
 					open_car = false;
 					invent.open_inventar();
 				}
+				
 
 				if (GetAsyncKeyState(VK_ESCAPE) && !pause) {
 					game = false;
@@ -414,21 +433,43 @@ int main() {
 				}
 			}
 		}
+		
+		if (bool_about) {
+			txClear(); // Очищаем экран (делает фон белым)
+			txSetColor(TX_BLACK);  // Устанавливаем цвет текста в чёрный
+			txTextOut(0, 0, "Об авторе:");
+			txTextOut(0, 30, "Если честно не знаю, что тут писать, но со мной можно связаться по телеграмму: @Manfy4");
+			back.draw_b();
+			if (back.pressed()) {
+				bool_about = false;
+				menu = true;
+			}
+		}
+		
+		if (bool_settings) {
+			txClear();
+			std::string language_button_text = language_text + language;
+			Button languagge = { 0, 50, 200, 40, W, B, language_button_text.c_str() };
+			languagge.draw_b();
+			language = language.c_str();
+			language_text = language_text.c_str();
+			back.draw_b();
+			if (languagge.pressed()) {
+				txSleep(100);
+				languagge.cnhage_lan(language, language_text, start_text, about_me_text, settings_text, exit_text, back_text);
+				txClear();				
+			}
+			if (back.pressed()) {
+				menu = true;
+				bool_settings = false;
+			}
+		
+		}
+
+
 		if (menu) {
 			/// Обо мне ///
-			if (bool_about) {
-				txSetFillColor(B);
-				txSetColor(B);
-				txRectangle(0, 0, 1080, 720);
-				txSetColor(W);
-				txTextOut(0, 0, "Об авторе:");
-				txTextOut(0, 30, "Если честно, не знаю, что тут писать, но со мной можно связаться по телеграмму: @Manfy4");
-				back.draw_b();
-				if (back.pressed()) {
-					bool_about = false;
-					menu = true;
-				}
-			}
+			
 
 			/// Кнопка "Начать игру" ///
 			if (start.pressed()) {
@@ -446,6 +487,15 @@ int main() {
 			if (exit.pressed()) {
 				running = false;
 			}
+
+			if (settings.pressed()) {
+				
+				menu = false;
+				bool_settings = true;
+				
+				
+			}
+
 		}
 
 		txEnd();
