@@ -2,6 +2,8 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm> 
+#include <vector>
+#include <ctime>
 
 
 ///Статистика игрока///
@@ -15,66 +17,196 @@ public:
 ///////////////////////
 
 
-
-
 struct Inventar {
-	HDC med = txLoadImage("textures/items/heal_texture.bmp");
-	HDC water = txLoadImage("textures/items/water_texture.bmp");
-	int kolvo_predmetov;
-	int random_predmet = 0;
-	std::initializer_list<string> predmets_in_inv;
+	HDC med;
+	HDC water;
 	
+	int random_predmet = 0;
+	bool itemPlaced = false;
+
+	bool bool_water = false, bool_med = false;
+	int k_water = 0, k_med = 0;
+
+	const int SLOT_WIDTH = 90;
+	const int SLOT_HEIGHT = 90;
+
+	std::map<int, int> itemCount;
+
+	std::vector<std::pair<int, int>> carSlots = {
+		{550,  30}, {650,  30}, {750,  30}, {850,  30}, {950,  30},
+		{550, 130}, {650, 130}, {750, 130}, {850, 130}, {950, 130},
+		{550, 230}, {650, 230}, {750, 230}, {850, 230}, {950, 230}
+	};
+
+	std::vector<std::pair<int, int>> invSlots = {
+		{50,  30}, {150,  30}, {250,  30}, {350,  30}, {450,  30},
+		{50, 130}, {150, 130}, {250, 130}, {350, 130}, {450, 130},
+		{50, 230}, {150, 230}, {250, 230}, {350, 230}, {450, 230}
+	};
+
+	
+
+	std::map<int, std::pair<int, int>> inventory;
+
+	std::pair<int, int> currentSlot = { 0, 0 };
+
+	Inventar() {
+		med = txLoadImage("textures/items/heal_texture.bmp");
+		water = txLoadImage("textures/items/water_texture.bmp");
+
+		if (!med || !water) {
+			txMessageBox("Ошибка загрузки текстур!", "Ошибка", MB_OK | MB_ICONERROR);
+		}
+
+		itemCount[1] = 0;  // Вода
+		itemCount[2] = 0;
+	}
+
+	std::pair<int, int> getRandomSlot() {
+		int index = rand() % carSlots.size();
+		return carSlots[index];
+	}
+
 	void open_car() {
-		
-		if (random_predmet == 0)(random_predmet = rand() % (2 - 1 + 1) + 1);
-		
+		if (!itemPlaced) {
+			random_predmet = rand() % 2 + 1;
+			currentSlot = getRandomSlot();
+			itemPlaced = true; 
+		}
+
 		txSetFillColor(TX_BLACK);
 		txSetColor(TX_BLACK);
 
+		// Разделительные линии
 		txRectangle(640, 0, 660, 360);
 		txRectangle(740, 0, 760, 360);
 		txRectangle(840, 0, 860, 360);
 		txRectangle(940, 0, 960, 360);
 		txRectangle(1040, 0, 1080, 360);
-
 		txRectangle(540, 0, 1080, 20);
-
 		txRectangle(540, 100, 1080, 120);
 		txRectangle(540, 200, 1080, 220);
 		txRectangle(540, 300, 1080, 360);
 
 		txSetFillColor(TX_WHITE);
 		txSetColor(TX_WHITE);
-		if (random_predmet == 1)(Win32::TransparentBlt(txDC(), 500, 0, 200, 200, water, 0, 0, 200, 200, TX_WHITE));
-		else(Win32::TransparentBlt(txDC(), 495, 0, 400, 300, med, 0, 0, 200, 113, TX_WHITE));
+
+		int waterWidth = 37, waterHeight = 59;
+		int medWidth = 32, medHeight = 27;
+
+		float scaleX_water = static_cast<float>(SLOT_WIDTH - 10) / waterWidth;
+		float scaleY_water = static_cast<float>(SLOT_HEIGHT - 10) / waterHeight;
+		float scaleX_med = static_cast<float>(SLOT_WIDTH - 10) / medWidth;
+		float scaleY_med = static_cast<float>(SLOT_HEIGHT - 10) / medHeight;
+
+		float scaleWater = std::min(scaleX_water, scaleY_water);
+		float scaleMed = std::min(scaleX_med, scaleY_med);
+
+		int newWaterWidth = static_cast<int>(waterWidth * scaleWater);
+		int newWaterHeight = static_cast<int>(waterHeight * scaleWater);
+		int newMedWidth = static_cast<int>(medWidth * scaleMed);
+		int newMedHeight = static_cast<int>(medHeight * scaleMed);
+
+		int xWater = currentSlot.first + ((SLOT_WIDTH - newWaterWidth) / 2) + 5;
+		int yWater = currentSlot.second + ((SLOT_HEIGHT - newWaterHeight) / 2) - 15;
+		int xMed = currentSlot.first + ((SLOT_WIDTH - newMedWidth) / 2) + 5;
+		int yMed = currentSlot.second + ((SLOT_HEIGHT - newMedHeight) / 2) - 8;
+
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= xWater - 15 and txMouseX() <= xWater + newWaterWidth + 15 and txMouseY() >= yWater and txMouseY() <= yWater + newWaterHeight and random_predmet == 1) {
+			addItemToInventory(1);
+			itemPlaced = false;
+		}
+
+		else if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= xMed and txMouseX() <= xMed + newMedWidth and txMouseY() >= yMed and txMouseY() <= yMed + newMedHeight and random_predmet == 2) {
+			addItemToInventory(2);
+			itemPlaced = false;
+		}
+
+		if (random_predmet == 1 && water) {
+			Win32::TransparentBlt(txDC(), xWater, yWater, newWaterWidth, newWaterHeight, water, 0, 0, 37, 59, TX_WHITE);
+		}
+		else if (random_predmet == 2 && med) {
+			Win32::TransparentBlt(txDC(), xMed, yMed, newMedWidth, newMedHeight, med, 0, 0, 32, 27, TX_WHITE);
+		}
 	}
 
+	void addItemToInventory(int itemType) {
+		if (itemCount[itemType] == 0) {
+			// Если предмета еще нет в инвентаре, находим первый свободный слот
+			for (const auto& slot : invSlots) {
+				bool occupied = false;
+				for (const auto& pair : inventory) {
+					if (pair.second == slot) {
+						occupied = true;
+						break;
+					}
+				}
+				if (!occupied) {
+					inventory[itemType] = slot;
+					break;
+				}
+			}
+		}
+		itemCount[itemType]++;
+	}
+	
+	
+	
 	void open_inventar() {
-		txClear();
-		
 		txBegin();
-		
+
+
+		int waterWidth = 37, waterHeight = 59;
+		int medWidth = 32, medHeight = 27;
+
+		float scaleX_water = static_cast<float>(SLOT_WIDTH - 10) / waterWidth;
+		float scaleY_water = static_cast<float>(SLOT_HEIGHT - 10) / waterHeight;
+		float scaleX_med = static_cast<float>(SLOT_WIDTH - 10) / medWidth;
+		float scaleY_med = static_cast<float>(SLOT_HEIGHT - 10) / medHeight;
+
+		float scaleWater = std::min(scaleX_water, scaleY_water);
+		float scaleMed = std::min(scaleX_med, scaleY_med);
+
+		int newWaterWidth = static_cast<int>(waterWidth * scaleWater);
+		int newWaterHeight = static_cast<int>(waterHeight * scaleWater);
+		int newMedWidth = static_cast<int>(medWidth * scaleMed);
+		int newMedHeight = static_cast<int>(medHeight * scaleMed);
+
+
 		txSetFillColor(TX_BLACK);
 		txSetColor(TX_BLACK);
-		
-		txRectangle(500,0,560,360);
-		
-		txRectangle(0, 100, 540,120);
+		txRectangle(500, 0, 560, 360);
+		txRectangle(0, 100, 540, 120);
 		txRectangle(0, 200, 540, 220);
 		txRectangle(0, 300, 540, 360);
-		
 		txRectangle(0, 0, 20, 360);
 		txRectangle(0, 0, 540, 20);
-
 		txRectangle(100, 0, 120, 360);
 		txRectangle(200, 0, 220, 360);
 		txRectangle(300, 0, 320, 360);
 		txRectangle(400, 0, 420, 360);
 		txRectangle(500, 0, 520, 360);
 
-
 		txSetFillColor(TX_WHITE);
 		txSetColor(TX_WHITE);
+
+		for (const auto& pair : inventory) {
+			int itemType = pair.first;
+			auto slot = pair.second;
+			int x = slot.first;
+			int y = slot.second;
+
+			if (itemType == 1) {
+				Win32::TransparentBlt(txDC(), x-15, y-10, newWaterWidth, newWaterHeight, water, 0, 0, 37, 59, TX_WHITE);
+			}
+			else if (itemType == 2) {
+				Win32::TransparentBlt(txDC(), x-30, y+5, newMedWidth, newMedHeight, med, 0, 0, 32, 27, TX_WHITE);
+			}
+
+			txSelectFont("Arial", 20);
+			txDrawText(x + 40, y + 60, x + 80, y + 80, std::to_string(itemCount[itemType]).c_str());
+		}
+
 		txEnd();
 	}
 };
@@ -355,12 +487,19 @@ int main() {
 		if (GetAsyncKeyState(0x45) && open_inv == true && !prev_state) {
 			txSleep(100);
 			open_inv = false;
-			cout << open_inv;
 		}
 		if (!(GetAsyncKeyState(0x45) & 0x8000) && open_inv) {
 			txSleep(50);
 			prev_state = false;
 		}
+
+		if (GetAsyncKeyState(VK_ESCAPE) && pause) {
+			txSleep(100);
+			game = true;
+			pause = false;
+			
+		}
+
 		// Если в игре, отрисовываем игру
 		if (game) {
 			mouse_x, mouse_y = txMouseX(), txMouseY();
@@ -382,6 +521,7 @@ int main() {
 				
 
 				if (GetAsyncKeyState(VK_ESCAPE) && !pause) {
+					txSleep(100);
 					game = false;
 					pause = true;
 				}
@@ -437,8 +577,15 @@ int main() {
 		if (bool_about) {
 			txClear(); // Очищаем экран (делает фон белым)
 			txSetColor(TX_BLACK);  // Устанавливаем цвет текста в чёрный
-			txTextOut(0, 0, "Об авторе:");
-			txTextOut(0, 30, "Если честно не знаю, что тут писать, но со мной можно связаться по телеграмму: @Manfy4");
+			if (language == "Русский")
+			{
+				txTextOut(0, 0, "Об авторе:");
+				txTextOut(0, 30, "Если честно не знаю, что тут писать, но со мной можно связаться по телеграмму: @Manfy4");
+			}
+			else {
+				txTextOut(0, 0, "About me:");
+				txTextOut(0, 30, "To be honest, I don't know what to write here, but you can contact me by telegram: @Manfy4");
+			}
 			back.draw_b();
 			if (back.pressed()) {
 				bool_about = false;
