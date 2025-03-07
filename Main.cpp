@@ -21,6 +21,8 @@ struct Inventar {
 	HDC med;
 	HDC water;
 	
+	bool is_luted = false;
+
 	int random_predmet = 0;
 	bool itemPlaced = false;
 
@@ -112,20 +114,22 @@ struct Inventar {
 		int xMed = currentSlot.first + ((SLOT_WIDTH - newMedWidth) / 2) + 5;
 		int yMed = currentSlot.second + ((SLOT_HEIGHT - newMedHeight) / 2) - 8;
 
-		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= xWater - 15 and txMouseX() <= xWater + newWaterWidth + 15 and txMouseY() >= yWater and txMouseY() <= yWater + newWaterHeight and random_predmet == 1) {
+		if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= xWater - 15 and txMouseX() <= xWater + newWaterWidth + 15 and txMouseY() >= yWater and txMouseY() <= yWater + newWaterHeight and random_predmet == 1 && is_luted == false) {
 			addItemToInventory(1);
 			itemPlaced = false;
+			is_luted = true;
 		}
 
-		else if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= xMed and txMouseX() <= xMed + newMedWidth and txMouseY() >= yMed and txMouseY() <= yMed + newMedHeight and random_predmet == 2) {
+		else if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= xMed and txMouseX() <= xMed + newMedWidth and txMouseY() >= yMed and txMouseY() <= yMed + newMedHeight and random_predmet == 2 && is_luted == false) {
 			addItemToInventory(2);
 			itemPlaced = false;
+			is_luted = true;
 		}
 
-		if (random_predmet == 1 && water) {
+		if (random_predmet == 1 && water && is_luted == false) {
 			Win32::TransparentBlt(txDC(), xWater, yWater, newWaterWidth, newWaterHeight, water, 0, 0, 37, 59, TX_WHITE);
 		}
-		else if (random_predmet == 2 && med) {
+		else if (random_predmet == 2 && med && is_luted == false) {
 			Win32::TransparentBlt(txDC(), xMed, yMed, newMedWidth, newMedHeight, med, 0, 0, 32, 27, TX_WHITE);
 		}
 	}
@@ -259,14 +263,13 @@ struct Button {
 		txSetColor(color_text);
 		txDrawText(x, y, x + width, y + heigh, text);
 	}
+	
 	bool pressed() {
 		return(txMouseX() > x && txMouseX() < x + width &&
 			txMouseY() > y && txMouseY() < y + heigh &&
 			txMouseButtons() == 1);
 	}
 	void cnhage_lan(string& language, string& language_text, string& start_text, string& about_me_text, string& settings_text, string& exit_text, string& back_text){
-		
-		
 		if (language == "Русский"){
 			language = "English";
 			language_text = "Language: ";
@@ -276,7 +279,6 @@ struct Button {
 			exit_text = "Exit";
 			back_text = "Back";
 		}
-		
 		else if (language == "English")
 		{
 			language = "Русский";
@@ -458,7 +460,6 @@ int main() {
 	Player blt;
 	Background bg = { txLoadImage("textures/bg/mainbg.bmp")};
 	Button start = { 0,300,150,40, W , B, start_text.c_str()};
-	
 	Button about = { 0, 400, 120, 40, W, B , about_me_text.c_str()};
 	Button settings = { 0, 350, 150, 40, W, B , settings_text.c_str()};
 	Button exit = { 0, 450, 120, 40, W, B , exit_text.c_str()};
@@ -468,10 +469,10 @@ int main() {
 	Inventar invent;
 
 	while (running) {
-		// Очищаем экран перед отрисовкой
 		txClear();
-		txBegin();
-		// Если в меню, то отображаем фон и кнопки
+		txBegin(); // Начинаем буферизацию
+
+		// Отрисовка меню
 		if (menu) {
 			bg.drawbg();
 			start.draw_b();
@@ -479,11 +480,14 @@ int main() {
 			settings.draw_b();
 			exit.draw_b();
 		}
+
+		// Отрисовка инвентаря
 		if (open_inv && GetAsyncKeyState(0x45) == false) {
 			invent.open_inventar();
-			if (open_car) (invent.open_car());
-			
+			if (open_car) invent.open_car();
 		}
+
+		// Логика выхода из инвентаря
 		if (GetAsyncKeyState(0x45) && open_inv == true && !prev_state) {
 			txSleep(100);
 			open_inv = false;
@@ -493,75 +497,127 @@ int main() {
 			prev_state = false;
 		}
 
-		if (GetAsyncKeyState(VK_ESCAPE) && pause) {
+		// Логика паузы
+		if (GetAsyncKeyState(VK_ESCAPE) && pause && !bool_settings) {
+			gamebg.draw(location, x, y, open_inv);
+			anim.Idle(x, y, left, right, open_inv);
 			txSleep(100);
-			game = true;
 			pause = false;
-			
 		}
 
-		// Если в игре, отрисовываем игру
-		if (game) {
-			mouse_x, mouse_y = txMouseX(), txMouseY();
-			if (open_inv != true)
-			{
-				gamebg.draw(location, x, y, open_inv);
+		///Пауза///
+		if (pause) {
+			txSetColor(TX_WHITE);
+			txSetFillColor(TX_BLACK);
+			gamebg.draw(location, x, y, open_inv);
+			txRectangle(300,200,780,500);
+			txSelectFont("Arial", 38);
+			
+			
+			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= 460 and txMouseX() <= 625 and txMouseY() >= 300 and txMouseY() <= 350) {
+				anim.Idle(x, y, left, right, open_inv);
+				
+				txSleep(100);
+				pause = false;
+			}
+			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= 460 and txMouseX() <= 625 and txMouseY() >= 370 and txMouseY() <= 420) {
+				bool_settings = true;
+				game = false;
+			} 
+			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= 440 and txMouseX() <= 650 and txMouseY() >= 440 and txMouseY() <= 490) {
+				game = false;
+				menu = true;
+				pause = false;
+			}
 
-				if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= x3 and txMouseX() <= x3 + 380 and x < x3 + 420 and x + 64 > x3 - 40) {
+			if (language == "Русский")
+			{
+				txTextOut(400, 200, "Игра приостановлена");
+				txDrawText(460, 300, 625, 350 , "Продолжить");
+				txDrawText(460, 370, 625, 420, "Настройки");
+				txDrawText(440, 440, 650, 490, "Главное меню");
+			}
+			else {
+				txTextOut(440, 200, "Game is paused");
+				txDrawText(460, 300, 625, 350, "Return");
+				txDrawText(460, 370, 625, 420, "Settings");
+				txDrawText(440, 440, 650, 490, "Main menu");
+			}
+
+
+
+		}
+		////////////
+		
+		// Отрисовка игры
+		if (game) {
+			mouse_x = txMouseX();
+			mouse_y = txMouseY();
+
+			if (!open_inv) {
+				if (!pause) (gamebg.draw(location, x, y, open_inv));
+				
+
+				if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 &&
+					txMouseX() >= x3 && txMouseX() <= x3 + 380 &&
+					x < x3 + 420 && x + 64 > x3 - 40 && !pause) {
 					open_inv = true;
 					open_car = true;
 				}
-				if (GetAsyncKeyState(0x45) && open_inv == false && !prev_state) {
+
+				if (GetAsyncKeyState(0x45) && !open_inv && !prev_state && !pause) {
 					prev_state = true;
 					txSleep(100);
 					open_inv = true;
 					open_car = false;
 					invent.open_inventar();
 				}
-				
 
-				if (GetAsyncKeyState(VK_ESCAPE) && !pause) {
+				if (GetAsyncKeyState(VK_ESCAPE) && !pause && !bool_settings) {
+					anim.Idle(x, y, left, right, open_inv);
 					txSleep(100);
-					game = false;
+					
 					pause = true;
 				}
 
+				// Границы карты
 				if (y > 550) y = 550;
 				if (x < 0) x = 0;
 
+				// Анимации персонажа
 				if (!move && y <= 550) {
 					anim.Idle(x, y, left, right, open_inv);
 					txSleep(50);
 				}
 
-				if (GetAsyncKeyState(0x57) & 0x8000 && location != 1) {
+				if (GetAsyncKeyState(0x57) & 0x8000 && location != 1 && !pause) {
 					y -= 5;
 					up = true; down = false;
 					blt.draw(x, y, left, right, open_inv);
 					move = true;
 					txSleep(10);
 				}
-				else if (GetAsyncKeyState(0x53) & 0x8000 && y <= 550) {
+				else if (GetAsyncKeyState(0x53) & 0x8000 && y <= 550 && !pause) {
 					y += 5;
 					up = false; down = true;
 					blt.draw(x, y, left, right, open_inv);
 					move = true;
 					txSleep(10);
 				}
-				else if (GetAsyncKeyState(0x41) & 0x8000 && x >= 1) {
+				else if (GetAsyncKeyState(0x41) & 0x8000 && x >= 1 && !pause) {
 					x -= 5;
 					left = true;
 					right = false;
-					gamebg.animbg(right, left,x3);
+					gamebg.animbg(right, left, x3);
 					blt.draw(x, y, left, right, open_inv);
 					move = true;
 					txSleep(10);
 				}
-				else if (GetAsyncKeyState(0x44) & 0x8000) {
+				else if (GetAsyncKeyState(0x44) & 0x8000 && !pause) {
 					x += 5;
 					left = false;
 					right = true;
-					gamebg.animbg(right, left,x3);
+					gamebg.animbg(right, left, x3);
 					blt.draw(x, y, left, right, open_inv);
 					move = true;
 					txSleep(10);
@@ -594,6 +650,7 @@ int main() {
 		}
 		
 		if (bool_settings) {
+			txSetFillColor(TX_BLACK);
 			txClear();
 			std::string language_button_text = language_text + language;
 			Button languagge = { 0, 50, 200, 40, W, B, language_button_text.c_str() };
@@ -607,8 +664,15 @@ int main() {
 				txClear();				
 			}
 			if (back.pressed()) {
-				menu = true;
-				bool_settings = false;
+				if (!pause)
+				{
+					menu = true;
+					bool_settings = false;
+				}
+				else{
+					game = true;
+					bool_settings = false;
+				}
 			}
 		
 		}
