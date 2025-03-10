@@ -4,6 +4,10 @@
 #include <algorithm> 
 #include <vector>
 #include <ctime>
+#include <windows.h>
+#include <gdiplus.h>
+
+#pragma comment(lib, "gdiplus.lib")
 
 
 ///Статистика игрока///
@@ -15,7 +19,6 @@ public:
 	string name;
 };
 ///////////////////////
-
 
 struct Inventar {
 	HDC med;
@@ -214,6 +217,7 @@ struct Inventar {
 		txEnd();
 	}
 };
+
 ///Анимация бездействия///
 struct PlayerAnimation {
 	int x,y,cadr = 0;
@@ -374,8 +378,7 @@ struct Background {
 	HDC image;
 	void drawbg()
 	{
-		
-		txBitBlt(txDC(), 0, 0, 1080, 720, image);
+		Win32::TransparentBlt(txDC(), 0, 0, 1080, 720, image, 0, 0, 1024, 1024, TX_WHITE);
 	}
 };
 ////////////////
@@ -416,9 +419,28 @@ struct Player {
 
 };
 ///////////////////////////
+
+void show_logo(int ms, bool& menu, bool& bool_logo) {
+	HDC logo = txLoadImage("textures/logo/logo.bmp");
+
+	txBegin();
+	txClear();
+	txSetFillColor(TX_BLACK);
+	txSetColor(TX_BLACK);
+	txRectangle(0, 0, 1080, 720);
+	Win32::TransparentBlt(txDC(), 415, 250, 256, 256, logo, 0, 0, txGetExtentX(logo), txGetExtentY(logo), TX_WHITE);
+	txEnd();
+
+	txSleep(ms);
+
+	menu = true;
+	bool_logo = false;
+}
+
 int main() {
 	txCreateWindow(1080, 720);
 	txTextCursor(false);
+	
 	bool loading = true;
 	int precent = 0;
 	int w;
@@ -432,7 +454,8 @@ int main() {
 	bool game = false;
 	bool bool_about = false;
 	bool bool_settings = false;
-	bool menu = true;
+	bool menu = false;
+	bool bool_logo = true;
 	int x = 1;
 	int y = 550;
 	bool move = false;
@@ -455,8 +478,6 @@ int main() {
 	std::string settings_text = "Настройки";
 	std::string exit_text = "Выход";
 	std::string back_text = "Вернуться";
-
-
 	Player blt;
 	Background bg = { txLoadImage("textures/bg/mainbg.bmp")};
 	Button start = { 0,300,150,40, W , B, start_text.c_str()};
@@ -468,7 +489,9 @@ int main() {
 	GameBackground gamebg = { txLoadImage("textures/bg/city/car_trees.bmp"), txLoadImage("textures/bg/city/road.bmp"), txLoadImage("textures/bg/city/houses&trees_bg.bmp") };
 	Inventar invent;
 
-	while (running) {
+	show_logo(2025, menu, bool_logo); 
+	/////////^^^^^^///////// :)
+	while (running && !bool_logo) {
 		txClear();
 		txBegin(); // Начинаем буферизацию
 
@@ -497,7 +520,7 @@ int main() {
 			prev_state = false;
 		}
 
-		// Логика паузы
+		// Выход из паузы
 		if (GetAsyncKeyState(VK_ESCAPE) && pause && !bool_settings) {
 			gamebg.draw(location, x, y, open_inv);
 			anim.Idle(x, y, left, right, open_inv);
@@ -512,7 +535,6 @@ int main() {
 			gamebg.draw(location, x, y, open_inv);
 			txRectangle(300,200,780,500);
 			txSelectFont("Arial", 38);
-			
 			
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000 and txMouseX() >= 460 and txMouseX() <= 625 and txMouseY() >= 300 and txMouseY() <= 350) {
 				anim.Idle(x, y, left, right, open_inv);
